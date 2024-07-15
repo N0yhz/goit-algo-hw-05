@@ -9,21 +9,19 @@ def input_error(func):
         except ValueError:
             return 'Give me [name] and [phone] please.'
         except IndexError:
-            return 'Enter [username]'
-        except Exception as e:
-            return str(e)
+            return'Enter [username]'
+        except Exception:
+            return 'Something went wrong.'
     return inner
 
+@input_error
 def add_contacts(args, contacts):
-    if len(args) != 2:
-        return 'Invalid arguments. Usage: add [name] [new phone]'
     name, phone = args
     contacts[name] = phone
     return 'Contact added'
 
+@input_error
 def change_contacts(args, contacts):
-    if len(args) != 2:
-        return 'Invalid arguments. Usage: change [name] [new phone]'
     name, new_phone = args
     if name in contacts:
         contacts[name] = new_phone
@@ -31,15 +29,15 @@ def change_contacts(args, contacts):
     else:
         return 'Contact not found'
 
+@input_error
 def show_phone(args, contacts):
-    if len(args) != 1:
-        return 'Invalid arguments. Use: phone [name]'
     name = args[0]
     if name in contacts:
         return f'{name} phone number is {contacts[name]}.'
     else:
         return 'Contact not found.'
-    
+
+@input_error    
 def handle_command(command,args):
     contacts = {}
 
